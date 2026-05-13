@@ -66,5 +66,4 @@ The "canary" version is monitored using specific health metrics:
 * **Performance**: Latency and response times are compared against the stable version.
 
 
-* 
-**Rollout**: If the canary remains stable for a set period, traffic is gradually increased to **100% of users**
+* **Rollout**: If the canary remains stable for a set period, traffic is gradually increased to **100% of users**
