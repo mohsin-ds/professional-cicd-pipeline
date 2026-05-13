@@ -29,16 +29,13 @@ This project implements a professional **Deployment Assembly Line** using GitHub
 
 To ensure only high-quality code is deployed, the pipeline includes the following checkpoints:
 
-* 
-**Linting**: Verifies code style using ESLint to maintain consistency.
+* **Linting**: Verifies code style using ESLint to maintain consistency.
 
 
-* 
-**Unit Testing**: Runs isolated tests to verify functions with a goal of high coverage.
+* **Unit Testing**: Runs isolated tests to verify functions with a goal of high coverage.
 
 
-* 
-**Security Scanning**: Uses Trivy to scan the filesystem and dependencies for known vulnerabilities.
+* **Security Scanning**: Uses Trivy to scan the filesystem and dependencies for known vulnerabilities.
 
 
 
@@ -63,13 +60,11 @@ In a Canary release, we deploy the new version of the application to a small, in
 
 The "canary" version is monitored using specific health metrics:
 
-* 
-**Error Rates**: We closely monitor for any spike in error rates; if errors exceed a defined threshold, the deployment is immediately halted.
+* **Error Rates**: We closely monitor for any spike in error rates; if errors exceed a defined threshold, the deployment is immediately halted.
+
+
+* **Performance**: Latency and response times are compared against the stable version.
 
 
 * 
-**Performance**: Latency and response times are compared against the stable version.
-
-
-* 
-**Rollout**: If the canary remains stable for a set period, traffic is gradually increased to **100% of users**.
+**Rollout**: If the canary remains stable for a set period, traffic is gradually increased to **100% of users**
