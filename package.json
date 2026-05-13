@@ -1,0 +1,24 @@
+{
+  "name": "professional-cicd-pipeline",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mohsin-ds/professional-cicd-pipeline.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mohsin-ds/professional-cicd-pipeline/issues"
+  },
+  "homepage": "https://github.com/mohsin-ds/professional-cicd-pipeline#readme",
+  "devDependencies": {
+    "eslint": "^10.3.0",
+    "jest": "^30.4.2"
+  }
+}
