@@ -1,3 +1,4 @@
+
 ---
 
 # Lab 10: Professional CI/CD Pipelines and Release Engineering
