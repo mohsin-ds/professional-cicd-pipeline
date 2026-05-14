@@ -1,4 +1,49 @@
-smoke-test:
+name: DevOps Assembly Line
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  # --- Task 1 Jobs ---
+  lint:
+    name: Lint Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci
+      - run: npm run lint
+
+  test:
+    name: Unit Testing
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci
+      - run: npm test
+
+  security-scan:
+    name: Trivy Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          exit-code: '1'
+
+  build:
+    name: Build Application
+    needs: [lint, test, security-scan]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm run build
+
+  # --- Task 4 Jobs ---
+  smoke-test:
     name: Production Smoke Test
     needs: build
     runs-on: ubuntu-latest
@@ -6,15 +51,14 @@ smoke-test:
       - name: Check App Health
         run: |
           echo "Checking application health..."
-          # Simulation: exit 1 triggers failure (Fig 18)
-          # Simulation: exit 0 triggers success (Fig 20)
+          # Set to exit 1 for Fig 18/19, exit 0 for Fig 20
           exit 1 
 
   rollback:
     name: Automated Rollback
     needs: smoke-test
-    if: failure() # This job only runs if the smoke-test fails
+    [cite_start]if: failure() # Only runs if smoke-test fails 
     runs-on: ubuntu-latest
     steps:
       - name: Trigger Rollback
-        run: echo "Smoke test failed! Reverting deployment to previous version."
+        [cite_start]run: echo "Smoke test failed! Reverting deployment..." [cite: 68]
