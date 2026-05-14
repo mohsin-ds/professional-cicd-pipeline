@@ -60,3 +60,22 @@ jobs:
     steps:
       - name: Trigger Rollback
         run: echo "Smoke test failed! Reverting deployment to previous version."
+
+  release:
+    name: Semantic Release
+    needs: smoke-test
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Semantic Release
+        uses: cycjimmy/semantic-release-action@v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
