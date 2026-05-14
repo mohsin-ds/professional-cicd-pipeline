@@ -7,7 +7,6 @@ on:
     branches: [main]
 
 jobs:
-  # --- Task 1 Jobs ---
   lint:
     name: Lint Check
     runs-on: ubuntu-latest
@@ -42,7 +41,6 @@ jobs:
       - uses: actions/checkout@v4
       - run: npm run build
 
-  # --- Task 4 Jobs ---
   smoke-test:
     name: Production Smoke Test
     needs: build
@@ -51,14 +49,14 @@ jobs:
       - name: Check App Health
         run: |
           echo "Checking application health..."
-          # Set to exit 1 for Fig 18/19, exit 0 for Fig 20
+          # Simulation: exit 1 to trigger Figure 18/19 failure
           exit 1 
 
   rollback:
     name: Automated Rollback
     needs: smoke-test
-    [cite_start]if: failure() # Only runs if smoke-test fails 
+    if: failure()
     runs-on: ubuntu-latest
     steps:
       - name: Trigger Rollback
-        [cite_start]run: echo "Smoke test failed! Reverting deployment..." [cite: 68]
+        run: echo "Smoke test failed! Reverting deployment to previous version."
