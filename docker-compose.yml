@@ -1,0 +1,48 @@
+services:
+  web-api:
+    build: .
+    ports:
+      - "3000:3000"
+    networks:
+      - frontend
+      - backend
+    depends_on:
+      database:
+        condition: service_healthy
+
+  database:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydb
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "user", "-d", "mydb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - backend
+
+  cache:
+    image: redis:alpine
+    networks:
+      - backend
+
+  proxy:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    depends_on:
+      - web-api
+    networks:
+      - frontend
+
+networks:
+  frontend:
+  backend:
+
+volumes:
+  pgdata:
